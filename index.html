@@ -14,6 +14,7 @@
       --card-bg: #ffffff;
       --border: #e2e8f0;
       --muted: #475569;
+      --sidebar-bg: #ffffff;
     }
 
     * {
@@ -28,21 +29,60 @@
       line-height: 1.6;
     }
 
-    header {
-      padding: 3rem 1.5rem 2rem;
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover,
+    a:focus {
+      text-decoration: underline;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      background: var(--bg);
+    }
+
+    .sidebar {
+      flex: 0 0 25%;
+      max-width: 320px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .profile {
       text-align: center;
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(99, 102, 241, 0.15));
     }
 
-    header h1 {
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.18);
+      margin-bottom: 1rem;
+    }
+
+    .profile h1 {
       margin: 0 0 0.5rem;
-      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-size: 1.9rem;
     }
 
-    header p {
+    .tagline {
       margin: 0;
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: 1rem;
     }
 
     .cta {
@@ -65,6 +105,7 @@
     .cta:focus {
       transform: translateY(-2px);
       box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+      text-decoration: none;
     }
 
     .cta:focus {
@@ -72,19 +113,61 @@
       outline-offset: 2px;
     }
 
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1.5rem 3rem;
+    .links h2 {
+      margin: 0 0 1rem;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
     }
 
-    section {
-      margin-top: 2.5rem;
+    .links ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .links a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: background 0.2s ease, border 0.2s ease;
+    }
+
+    .links a:hover,
+    .links a:focus {
+      background: rgba(37, 99, 235, 0.08);
+      border-color: rgba(37, 99, 235, 0.28);
+      text-decoration: none;
+    }
+
+    .content {
+      flex: 1;
+      padding: 3rem 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
     }
 
     section h2 {
       margin-bottom: 1rem;
       font-size: 1.85rem;
+    }
+
+    #summary {
+      margin-top: 0;
     }
 
     .card {
@@ -124,14 +207,39 @@
 
     footer {
       text-align: center;
-      padding: 2rem 1rem 3rem;
+      padding: 1.5rem 1rem 0;
       font-size: 0.9rem;
       color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 1024px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+        width: 100%;
+        max-width: none;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        overflow: visible;
+      }
+
+      .content {
+        padding: 2.5rem 1.75rem 2rem;
+      }
     }
 
     @media (max-width: 640px) {
-      header {
-        padding: 2.5rem 1rem 1.75rem;
+      .links a {
+        font-size: 0.95rem;
+      }
+
+      .content {
+        padding: 2rem 1.25rem 1.75rem;
       }
 
       .card {
@@ -141,71 +249,88 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Sujit Shelar</h1>
-    <p>AI/ML Engineer | Agentic Systems | Generative AI | LLM Finetuning</p>
-    <a class="cta" href="SujitShelar_Resume.pdf" target="_blank" rel="noopener">View Resume</a>
-  </header>
-  <main>
-    <section id="summary">
-      <div class="card">
-        <h2>Summary</h2>
-        <p>Dedicated, self taught AI/ML Engineer with 8+ years of experience specializing in building agents, Generative AI, deep learning, reinforcement learning, finetuning LLM and predictive modeling-based scalable solutions. Proven track record in developing high-impact solutions for the tech industry, enhancing product capabilities, and driving operational efficiencies. Proficient in Python, agentic frameworks, LLMs, Finetuning, TensorFlow, PyTorch, and cloud technologies. Skilled in developing and deploying GenAI and LLM-based applications on AWS and Azure. Adept at rapidly building applications using tools like Cursor, Windsurf, Replit, and Bolt. Passionate about ethical AI and committed to leveraging data for actionable, sustainable solutions. Always open to connect and collaborate on innovative AI projects.</p>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="profile">
+        <img class="avatar" src="https://github.com/shelarsujit.png" alt="Portrait of Sujit Shelar">
+        <h1>Sujit Shelar</h1>
+        <p class="tagline">AI/ML Engineer | Agentic Systems | Generative AI | LLM Finetuning</p>
+        <a class="cta" href="SujitShelar_Resume.pdf" target="_blank" rel="noopener">View Resume</a>
       </div>
-    </section>
+      <nav class="links" aria-label="Social links">
+        <h2>Connect</h2>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/shelarsujit" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">-&gt;</span></a></li>
+          <li><a href="https://github.com/shelarsujit" target="_blank" rel="noopener">GitHub <span aria-hidden="true">-&gt;</span></a></li>
+          <li><a href="mailto:sujit130193@gmail.com">Email <span aria-hidden="true">-&gt;</span></a></li>
+          <li><a href="https://x.com/shelarsujit" target="_blank" rel="noopener">X (Twitter) <span aria-hidden="true">-&gt;</span></a></li>
+          <li><a href="https://medium.com/@shelarsujit" target="_blank" rel="noopener">Medium <span aria-hidden="true">-&gt;</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="content">
+      <main>
+        <section id="summary">
+          <div class="card">
+            <h2>Summary</h2>
+            <p>Dedicated, self taught AI/ML Engineer with 8+ years of experience specializing in building agents, Generative AI, deep learning, reinforcement learning, finetuning LLM and predictive modeling-based scalable solutions. Proven track record in developing high-impact solutions for the tech industry, enhancing product capabilities, and driving operational efficiencies. Proficient in Python, agentic frameworks, LLMs, Finetuning, TensorFlow, PyTorch, and cloud technologies. Skilled in developing and deploying GenAI and LLM-based applications on AWS and Azure. Adept at rapidly building applications using tools like Cursor, Windsurf, Replit, and Bolt. Passionate about ethical AI and committed to leveraging data for actionable, sustainable solutions. Always open to connect and collaborate on innovative AI projects.</p>
+          </div>
+        </section>
 
-    <section id="projects">
-      <h2>Selected Projects</h2>
-      <div class="projects">
-        <article class="card project">
-          <h3>Content Planning Solution on Veeva Vault</h3>
-          <p>Designed an interactive chatbot inside Veeva Vault that updates marketing content in real time, retrieves the right assets on demand, and automates multi-turn conversations through agent tooling.</p>
-          <ul class="meta">
-            <li><strong>Role:</strong> Backend development, orchestration, and mentoring junior engineers</li>
-            <li><strong>Tech:</strong> AWS, Azure, OpenAI, LangGraph, LangChain, Veeva Vault</li>
-          </ul>
-        </article>
+        <section id="projects">
+          <h2>Selected Projects</h2>
+          <div class="projects">
+            <article class="card project">
+              <h3>Content Planning Solution on Veeva Vault</h3>
+              <p>Designed an interactive chatbot inside Veeva Vault that updates marketing content in real time, retrieves the right assets on demand, and automates multi-turn conversations through agent tooling.</p>
+              <ul class="meta">
+                <li><strong>Role:</strong> Backend development, orchestration, and mentoring junior engineers</li>
+                <li><strong>Tech:</strong> AWS, Azure, OpenAI, LangGraph, LangChain, Veeva Vault</li>
+              </ul>
+            </article>
 
-        <article class="card project">
-          <h3>Database Querying and Visualizer Chatbot</h3>
-          <p>Built a scalable natural-language-to-SQL assistant that queries Databricks, applies rolling summaries to preserve context, enforces TPM/RPM limits, and delivers tailored visualizations across multiple business units.</p>
-          <ul class="meta">
-            <li><strong>Role:</strong> Backend development, orchestration, and mentoring junior engineers</li>
-            <li><strong>Tech:</strong> AWS, Azure, OpenAI, Databricks, LangGraph, LangChain</li>
-          </ul>
-        </article>
+            <article class="card project">
+              <h3>Database Querying and Visualizer Chatbot</h3>
+              <p>Built a scalable natural-language-to-SQL assistant that queries Databricks, applies rolling summaries to preserve context, enforces TPM/RPM limits, and delivers tailored visualizations across multiple business units.</p>
+              <ul class="meta">
+                <li><strong>Role:</strong> Backend development, orchestration, and mentoring junior engineers</li>
+                <li><strong>Tech:</strong> AWS, Azure, OpenAI, Databricks, LangGraph, LangChain</li>
+              </ul>
+            </article>
 
-        <article class="card project">
-          <h3>Knowledge Assistant for Chiller Technicians</h3>
-          <p>Launched an Azure-powered knowledge bot with role-based routing that pairs Semantic Kernel plugins and AI Search to ground responses while staying within GPT-3.5 token limits.</p>
-          <ul class="meta">
-            <li><strong>Role:</strong> Backend development, orchestration, and mentoring junior engineers</li>
-            <li><strong>Tech:</strong> Azure, Azure OpenAI, RAG, Semantic Kernel, LangChain</li>
-          </ul>
-        </article>
+            <article class="card project">
+              <h3>Knowledge Assistant for Chiller Technicians</h3>
+              <p>Launched an Azure-powered knowledge bot with role-based routing that pairs Semantic Kernel plugins and AI Search to ground responses while staying within GPT-3.5 token limits.</p>
+              <ul class="meta">
+                <li><strong>Role:</strong> Backend development, orchestration, and mentoring junior engineers</li>
+                <li><strong>Tech:</strong> Azure, Azure OpenAI, RAG, Semantic Kernel, LangChain</li>
+              </ul>
+            </article>
 
-        <article class="card project">
-          <h3>Multilingual Translation Solution</h3>
-          <p>Delivered an end-to-end translation platform for diverse document types, combining PII-aware preprocessing, Azure Translation, GPT-4 powered refinement, and dashboards for real-time operational oversight.</p>
-          <ul class="meta">
-            <li><strong>Role:</strong> Backend development, orchestration, and mentoring junior engineers</li>
-            <li><strong>Tech:</strong> Azure Logic Apps, Azure OpenAI, RAG, Azure Translation, LangChain</li>
-          </ul>
-        </article>
+            <article class="card project">
+              <h3>Multilingual Translation Solution</h3>
+              <p>Delivered an end-to-end translation platform for diverse document types, combining PII-aware preprocessing, Azure Translation, GPT-4 powered refinement, and dashboards for real-time operational oversight.</p>
+              <ul class="meta">
+                <li><strong>Role:</strong> Backend development, orchestration, and mentoring junior engineers</li>
+                <li><strong>Tech:</strong> Azure Logic Apps, Azure OpenAI, RAG, Azure Translation, LangChain</li>
+              </ul>
+            </article>
 
-        <article class="card project">
-          <h3>Finetuning the LLM</h3>
-          <p>Optimized domain-specific and task-focused LLMs by fine-tuning LLaMA&nbsp;3, Qwen, and V-JEPA 2 models with parameter-efficient strategies, achieving high inference efficiency and strong benchmark performance.</p>
-          <ul class="meta">
-            <li><strong>Highlights:</strong> LLaMA&nbsp;3 medical Q&amp;A LoRA (SujitShelar/llama3-medchat-8b-lora); Qwen-1.5B GSM8K LoRA (SujitShelar/deepseek-gsm8k-lora); V-JEPA 2 ViT-Large HMDB-51 finetune (SujitShelar/vjepa2-vitl-fpc16-256-hmdb51)</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-  </main>
-  <footer>
-    &copy; <span id="year"></span> Sujit Shelar | Always open to connect on AI innovation.
-  </footer>
+            <article class="card project">
+              <h3>Finetuning the LLM</h3>
+              <p>Optimized domain-specific and task-focused LLMs by fine-tuning LLaMA&nbsp;3, Qwen, and V-JEPA 2 models with parameter-efficient strategies, achieving high inference efficiency and strong benchmark performance.</p>
+              <ul class="meta">
+                <li><strong>Highlights:</strong> LLaMA&nbsp;3 medical Q&amp;A LoRA (SujitShelar/llama3-medchat-8b-lora); Qwen-1.5B GSM8K LoRA (SujitShelar/deepseek-gsm8k-lora); V-JEPA 2 ViT-Large HMDB-51 finetune (SujitShelar/vjepa2-vitl-fpc16-256-hmdb51)</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </main>
+      <footer>
+        &copy; <span id="year"></span> Sujit Shelar | Always open to connect on AI innovation.
+      </footer>
+    </div>
+  </div>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
